@@ -24,3 +24,13 @@ app.get('/users', async (req, res) => {
         res.status(500).send('Error retrieving users');
     }
 });
+
+app.post('/users', async (req, res) => {
+    const newUser = new User(req.body);
+    try {
+        await newUser.save();
+        res.status(201).json(newUser);
+    } catch (err) {
+        res.status(400).send('Error adding new user');
+    }
+});
