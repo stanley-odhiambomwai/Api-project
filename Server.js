@@ -34,3 +34,16 @@ app.post('/users', async (req, res) => {
         res.status(400).send('Error adding new user');
     }
 });
+
+app.put('/users/:id', async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedUser) {
+            return res.status(404).send('User not found');
+        }
+        res.json(updatedUser);
+    } catch (err) {
+        res.status(400).send('Error updating user');
+    }
+});
+
